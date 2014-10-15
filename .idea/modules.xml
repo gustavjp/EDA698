@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/alarmclock/alarmclock.iml" filepath="$PROJECT_DIR$/alarmclock/alarmclock.iml" />
+      <module fileurl="file://$PROJECT_DIR$/exercise 1/exercise 1.iml" filepath="$PROJECT_DIR$/exercise 1/exercise 1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/exercise 3/exercise 3.iml" filepath="$PROJECT_DIR$/exercise 3/exercise 3.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lift/lift.iml" filepath="$PROJECT_DIR$/lift/lift.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ljrt/ljrt.iml" filepath="$PROJECT_DIR$/ljrt/ljrt.iml" />
+      <module fileurl="file://$PROJECT_DIR$/washing/washing.iml" filepath="$PROJECT_DIR$/washing/washing.iml" />
+    </modules>
+  </component>
+</project>
+
