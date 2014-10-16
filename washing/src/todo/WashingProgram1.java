@@ -11,12 +11,14 @@ package todo;
 import done.*;
 
 /**
- * Program 3 of washing machine. Does the following:
- * <UL>
- * <LI>Lock hatch
+ * Program 1 of washing machine. Does the following:
+ * <UL>Lock hatch
  * <LI>Water in
  * <LI>Heat to 60
- * <LI>Unlocks the hatch.
+ * <LI>Spin for 30 minutes
+ * <LI>Rinse 5 times, 2 minutes each
+ * <LI>Centrifuge for 5 minutes
+ * <LI>Unlocks the hatch
  * </UL>
  */
 class WashingProgram1 extends WashingProgram {
@@ -65,8 +67,7 @@ class WashingProgram1 extends WashingProgram {
 		//Spin slow
 		mySpinController.putEvent(new SpinEvent(this, SpinEvent.SPIN_SLOW));
 		//Spin for 30 minutes
-		//Thread.sleep(30*60*100);
-		Thread.sleep(35000);
+		Thread.sleep(30*60*1000);
 		myTempController.putEvent(new TemperatureEvent(this, TemperatureEvent.TEMP_IDLE, 20.0));
 		//Turn off spin
 		mySpinController.putEvent(new SpinEvent(this, SpinEvent.SPIN_OFF));
@@ -85,8 +86,7 @@ class WashingProgram1 extends WashingProgram {
 			//Spin slow
 			mySpinController.putEvent(new SpinEvent(this, SpinEvent.SPIN_SLOW));
 			//Spin for 2 minutes
-			//Thread.sleep(2*60*1000);
-			Thread.sleep(2000);
+			Thread.sleep(2*60*1000);
 			//Turn off spin
 			mySpinController.putEvent(new SpinEvent(this, SpinEvent.SPIN_OFF));
 			//Drain water
