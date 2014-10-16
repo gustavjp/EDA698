@@ -44,11 +44,11 @@ class WashingProgram0 extends WashingProgram {
      * when the start() method is called.
      */
     protected void wash() throws InterruptedException {
-        // Switch of temp regulation
+        //Switch of temp regulation
         myTempController.putEvent(new TemperatureEvent(this, TemperatureEvent.TEMP_IDLE, 0.0));
-        // Switch off spin
+        //Switch off spin
         mySpinController.putEvent(new SpinEvent(this, SpinEvent.SPIN_OFF));
-        // Set water regulation to idle => drain pump stops
+        //Set water regulation to idle => drain pump stops
         myWaterController.putEvent(new WaterEvent(this, WaterEvent.WATER_IDLE, 0.0));
     }
 }

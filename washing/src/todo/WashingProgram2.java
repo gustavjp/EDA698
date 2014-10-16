@@ -53,38 +53,38 @@ class WashingProgram2 extends WashingProgram {
 	 */
 	protected void wash() throws InterruptedException {
 
-        // Lock the hatch
+        //Lock the hatch
         myMachine.setLock(true);
-        // Fill with water
+        //Fill with water
         myWaterController.putEvent(new WaterEvent(this, WaterEvent.WATER_FILL, 0.9));
-        // Wait until machine is filled with water
+        //Wait until machine is filled with water
         mailbox.doFetch();
-        // Stop filling water
+        //Stop filling water
         myWaterController.putEvent(new WaterEvent(this, WaterEvent.WATER_IDLE, 0.0));
-        //Set temperature to 60
+        //Set temperature to 40
         myTempController.putEvent(new TemperatureEvent(this, TemperatureEvent.TEMP_SET, 38.8));
-        //Wait until temperature is reached
+        //Wait until temperature regulator is turned
         mailbox.doFetch();
         //Spin slow
         mySpinController.putEvent(new SpinEvent(this, SpinEvent.SPIN_SLOW));
         //Spin for 30 minutes
         Thread.sleep(15*60*1000);
-        myTempController.putEvent(new TemperatureEvent(this, TemperatureEvent.TEMP_IDLE, 20.0));
+        myTempController.putEvent(new TemperatureEvent(this, TemperatureEvent.TEMP_IDLE, 0.0));
         //Turn off spin
         mySpinController.putEvent(new SpinEvent(this, SpinEvent.SPIN_OFF));
         //Drain water
         myWaterController.putEvent(new WaterEvent(this, WaterEvent.WATER_DRAIN, 0.0));
         //Wait until drained
         mailbox.doFetch();
-        // Fill with water
+        //Fill with water
         myWaterController.putEvent(new WaterEvent(this, WaterEvent.WATER_FILL, 0.9));
-        // Wait until machine is filled with water
+        //Wait until machine is filled with water
         mailbox.doFetch();
-        // Stop filling water
+        //Stop filling water
         myWaterController.putEvent(new WaterEvent(this, WaterEvent.WATER_IDLE, 0.0));
         //Set temperature to 60
         myTempController.putEvent(new TemperatureEvent(this, TemperatureEvent.TEMP_SET, 88.8));
-        //Wait until temperature is reached
+        //Wait until temperature regulator is turned on
         mailbox.doFetch();
         //Spin slow
         mySpinController.putEvent(new SpinEvent(this, SpinEvent.SPIN_SLOW));
@@ -99,11 +99,11 @@ class WashingProgram2 extends WashingProgram {
         mailbox.doFetch();
         //Rinse 5 times * 2 minutes
         for(int i = 0; i < 5; i++){
-            // Fill with water
+            //Fill with water
             myWaterController.putEvent(new WaterEvent(this, WaterEvent.WATER_FILL, 0.9));
-            // Wait until machine is filled with water
+            //Wait until machine is filled with water
             mailbox.doFetch();
-            // Stop filling water
+            //Stop filling water
             myWaterController.putEvent(new WaterEvent(this, WaterEvent.WATER_IDLE, 0.0));
             //Spin slow
             mySpinController.putEvent(new SpinEvent(this, SpinEvent.SPIN_SLOW));
@@ -118,8 +118,9 @@ class WashingProgram2 extends WashingProgram {
         }
         //Centrifuge
         mySpinController.putEvent(new SpinEvent(this, SpinEvent.SPIN_FAST));
+        //Spin for 5 minutes
         Thread.sleep(5*60*1000);
-        // Unlock
+        //Unlock
         myMachine.setLock(false);
 	}
 }
