@@ -1,9 +1,7 @@
 package todo;
 
-
 import se.lth.cs.realtime.*;
 import done.AbstractWashingMachine;
-
 
 public class WaterController extends PeriodicThread {
 	private double level;

@@ -13,12 +13,12 @@ import done.*;
 /**
  * Program 1 of washing machine. Does the following:
  * <UL>Lock hatch
- * <LI>Water in
- * <LI>Heat to 60
- * <LI>Spin for 30 minutes
- * <LI>Rinse 5 times, 2 minutes each
- * <LI>Centrifuge for 5 minutes
- * <LI>Unlocks the hatch
+ *      <LI>Water in
+ *      <LI>Heat to 60
+ *      <LI>Spin for 30 minutes
+ *      <LI>Rinse 5 times, 2 minutes each
+ *      <LI>Centrifuge for 5 minutes
+ *      <LI>Unlocks the hatch
  * </UL>
  */
 class WashingProgram1 extends WashingProgram {
@@ -56,14 +56,12 @@ class WashingProgram1 extends WashingProgram {
 		myWaterController.putEvent(new WaterEvent(this, WaterEvent.WATER_FILL, 0.9));
 		// Wait until machine is filled with water
 		mailbox.doFetch();
-		System.out.println("Done filling");
 		// Stop filling water
 		myWaterController.putEvent(new WaterEvent(this, WaterEvent.WATER_IDLE, 0.0));
 		//Set temperature to 60
 		myTempController.putEvent(new TemperatureEvent(this, TemperatureEvent.TEMP_SET, 58.8));
 		//Wait until temperature is reached
 		mailbox.doFetch();
-		System.out.println("Temperature set");
 		//Spin slow
 		mySpinController.putEvent(new SpinEvent(this, SpinEvent.SPIN_SLOW));
 		//Spin for 30 minutes

@@ -1,9 +1,7 @@
 package todo;
 
-
 import se.lth.cs.realtime.*;
 import done.AbstractWashingMachine;
-
 
 public class SpinController extends PeriodicThread {
 	private AbstractWashingMachine mach;

@@ -13,9 +13,9 @@ import done.*;
 /**
  * Program 3 of washing machine. Does the following:
  * <UL>
- *   <LI>Switches off heating
- *   <LI>Switches off spin
- *   <LI>Switches off pump
+ *      <LI>Switches off heating
+ *      <LI>Switches off spin
+ *      <LI>Switches off pump
  * </UL>
  */
 class WashingProgram0 extends WashingProgram {

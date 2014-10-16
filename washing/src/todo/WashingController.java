@@ -23,19 +23,22 @@ public class WashingController implements ButtonListener {
 
     public void processButton(int theButton) {
     	switch(theButton){
-    	case 0: //stop
+    	case 0:
             wp = new WashingProgram0(theMachine, theSpeed, tempController, waterController, spinController);
             wp.start();
     		break;
-    	case 1: //program1 - colour wash
+
+    	case 1:
     		wp = new WashingProgram1(theMachine, theSpeed, tempController, waterController, spinController);
     		wp.start();
     		break;
-    	case 2: //program2 - white wash
+
+    	case 2:
     		wp = new WashingProgram2(theMachine, theSpeed, tempController, waterController, spinController);
     		wp.start();
     		break;
-    	case 3: //program3 - drain
+
+    	case 3:
     		wp = new WashingProgram3(theMachine, theSpeed, tempController, waterController, spinController);
     		wp.start();
     		break;
