@@ -27,7 +27,8 @@ public class WashingController implements ButtonListener {
 		// TODO: implement this method
     	switch(theButton){
     	case 0: //stop
-    		
+            wp = new WashingProgram0(theMachine, theSpeed, tempController, waterController, spinController);
+            wp.start();
     		break;
     	case 1: //program1 - colour wash
     		wp = new WashingProgram1(theMachine, theSpeed, tempController, waterController, spinController);
