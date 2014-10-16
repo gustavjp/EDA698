@@ -11,12 +11,19 @@ package todo;
 import done.*;
 
 /**
- * Program 3 of washing machine. Does the following:
- * <UL>
- *   <LI>Switches off heating
- *   <LI>Switches off spin
- *   <LI>Pumps out water
- *   <LI>Unlocks the hatch.
+ * Program 2 of washing machine. Does the following:
+ * <UL>Lock hatch
+ * <LI>Water in
+ * <LI>Heat to 40
+ * <LI>Spin for 15 minutes
+ * <LI>Drain water
+ * <LI>Water in
+ * <LI>Heat to 60
+ * <LI>Spin for 30 minutes
+ * <LI>Drain water
+ * <LI>Rinse 5 times, 2 minutes each
+ * <LI>Centrifuge for 5 minutes
+ * <LI>Unlocks the hatch
  * </UL>
  */
 class WashingProgram2 extends WashingProgram {
@@ -46,26 +53,77 @@ class WashingProgram2 extends WashingProgram {
 	 */
 	protected void wash() throws InterruptedException {
 
-		// Switch of temp regulation
-		myTempController.putEvent(new TemperatureEvent(this,
-				TemperatureEvent.TEMP_IDLE,
-				0.0));
-
-		// Switch off spin
-		mySpinController.putEvent(new SpinEvent(this, SpinEvent.SPIN_OFF));
-
-		// Drain
-		myWaterController.putEvent(new WaterEvent(this,
-				WaterEvent.WATER_DRAIN,
-				0.0));
-		mailbox.doFetch(); // Wait for Ack
-
-		// Set water regulation to idle => drain pump stops
-		myWaterController.putEvent(new WaterEvent(this,
-				WaterEvent.WATER_IDLE,
-				0.0));
-
-		// Unlock
-		myMachine.setLock(false);
+        // Lock the hatch
+        myMachine.setLock(true);
+        // Fill with water
+        myWaterController.putEvent(new WaterEvent(this, WaterEvent.WATER_FILL, 0.9));
+        // Wait until machine is filled with water
+        mailbox.doFetch();
+        System.out.println("Done filling");
+        // Stop filling water
+        myWaterController.putEvent(new WaterEvent(this, WaterEvent.WATER_IDLE, 0.0));
+        //Set temperature to 60
+        myTempController.putEvent(new TemperatureEvent(this, TemperatureEvent.TEMP_SET, 38.8));
+        //Wait until temperature is reached
+        mailbox.doFetch();
+        System.out.println("Temperature set");
+        //Spin slow
+        mySpinController.putEvent(new SpinEvent(this, SpinEvent.SPIN_SLOW));
+        //Spin for 30 minutes
+        Thread.sleep(15*60*1000);
+        myTempController.putEvent(new TemperatureEvent(this, TemperatureEvent.TEMP_IDLE, 20.0));
+        //Turn off spin
+        mySpinController.putEvent(new SpinEvent(this, SpinEvent.SPIN_OFF));
+        //Drain water
+        myWaterController.putEvent(new WaterEvent(this, WaterEvent.WATER_DRAIN, 0.0));
+        //Wait until drained
+        mailbox.doFetch();
+        // Fill with water
+        myWaterController.putEvent(new WaterEvent(this, WaterEvent.WATER_FILL, 0.9));
+        // Wait until machine is filled with water
+        mailbox.doFetch();
+        System.out.println("Done filling");
+        // Stop filling water
+        myWaterController.putEvent(new WaterEvent(this, WaterEvent.WATER_IDLE, 0.0));
+        //Set temperature to 60
+        myTempController.putEvent(new TemperatureEvent(this, TemperatureEvent.TEMP_SET, 88.8));
+        //Wait until temperature is reached
+        mailbox.doFetch();
+        System.out.println("Temperature set");
+        //Spin slow
+        mySpinController.putEvent(new SpinEvent(this, SpinEvent.SPIN_SLOW));
+        //Spin for 30 minutes
+        Thread.sleep(30*60*1000);
+        myTempController.putEvent(new TemperatureEvent(this, TemperatureEvent.TEMP_IDLE, 20.0));
+        //Turn off spin
+        mySpinController.putEvent(new SpinEvent(this, SpinEvent.SPIN_OFF));
+        //Drain water
+        myWaterController.putEvent(new WaterEvent(this, WaterEvent.WATER_DRAIN, 0.0));
+        //Wait until drained
+        mailbox.doFetch();
+        //Rinse 5 times * 2 minutes
+        for(int i = 0; i < 5; i++){
+            // Fill with water
+            myWaterController.putEvent(new WaterEvent(this, WaterEvent.WATER_FILL, 0.9));
+            // Wait until machine is filled with water
+            mailbox.doFetch();
+            // Stop filling water
+            myWaterController.putEvent(new WaterEvent(this, WaterEvent.WATER_IDLE, 0.0));
+            //Spin slow
+            mySpinController.putEvent(new SpinEvent(this, SpinEvent.SPIN_SLOW));
+            //Spin for 2 minutes
+            Thread.sleep(2*60*1000);
+            //Turn off spin
+            mySpinController.putEvent(new SpinEvent(this, SpinEvent.SPIN_OFF));
+            //Drain water
+            myWaterController.putEvent(new WaterEvent(this, WaterEvent.WATER_DRAIN, 0.0));
+            //Wait until drained
+            mailbox.doFetch();
+        }
+        //Centrifuge
+        mySpinController.putEvent(new SpinEvent(this, SpinEvent.SPIN_FAST));
+        Thread.sleep(5*60*1000);
+        // Unlock
+        myMachine.setLock(false);
 	}
 }
