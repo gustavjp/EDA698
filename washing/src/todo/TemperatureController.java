@@ -37,7 +37,7 @@ public class TemperatureController extends PeriodicThread {
 			break;
 			
 		case TemperatureEvent.TEMP_SET:
-			if(mach.getTemperature() < temperature){
+			if(mach.getTemperature() < temperature && mach.getWaterLevel() > 0){
 				mach.setHeating(true);
 			}
 			else {
