@@ -9,10 +9,8 @@ public class WashingController implements ButtonListener {
 	private WaterController waterController;
 	private SpinController spinController;
 	private WashingProgram wp;
-	// TODO: add suitable attributes
 	
     public WashingController(AbstractWashingMachine theMachine, double theSpeed) {
-		// TODO: implement this constructor
     	this.theMachine = theMachine;
     	this.theSpeed = theSpeed;
     	tempController = new TemperatureController(theMachine, theSpeed);
@@ -24,7 +22,6 @@ public class WashingController implements ButtonListener {
     }
 
     public void processButton(int theButton) {
-		// TODO: implement this method
     	switch(theButton){
     	case 0: //stop
             wp = new WashingProgram0(theMachine, theSpeed, tempController, waterController, spinController);

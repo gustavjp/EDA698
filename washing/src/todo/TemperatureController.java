@@ -11,12 +11,10 @@ public class TemperatureController extends PeriodicThread {
 	private TemperatureEvent event;
 	private boolean ack;
 	private int mode;
-	
 	private WashingProgram wp;
-	// TODO: add suitable attributes
 
 	public TemperatureController(AbstractWashingMachine mach, double speed) {
-		super((long) (5000/speed)); // TODO: replace with suitable period
+		super((long) (10000/speed));
 		this.mach = mach;
 		mode = TemperatureEvent.TEMP_IDLE;
 		ack = false;
@@ -50,9 +48,7 @@ public class TemperatureController extends PeriodicThread {
 			break;
 			
 		default:
-			
 			break;
 		}
-		// TODO: implement this method
 	}
 }

@@ -9,12 +9,10 @@ public class SpinController extends PeriodicThread {
 	private AbstractWashingMachine mach;
 	private SpinEvent event;
 	private int mode, direction;
-	//private WashingProgram wp;
 	private long lastTime;
-	// TODO: add suitable attributes
 
 	public SpinController(AbstractWashingMachine mach, double speed) {
-		super((long) (1000/speed)); // TODO: replace with suitable period
+		super((long) (1000/speed));
 		this.mach = mach;
 		mode = SpinEvent.SPIN_OFF;
         direction = AbstractWashingMachine.SPIN_LEFT;
@@ -24,7 +22,6 @@ public class SpinController extends PeriodicThread {
 		event = (SpinEvent) mailbox.tryFetch();
 		if (event != null) {
 			mode = event.getMode();
-			//wp = (WashingProgram) event.getSource();
             lastTime = System.currentTimeMillis();
             switch(mode){
                 case SpinEvent.SPIN_OFF:

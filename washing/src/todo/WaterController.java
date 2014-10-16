@@ -11,16 +11,14 @@ public class WaterController extends PeriodicThread {
 	private WaterEvent event;
 	private int mode;
 	private WashingProgram wp;
-	// TODO: add suitable attributes
 
 	public WaterController(AbstractWashingMachine mach, double speed) {
-		super((long) (2000/speed)); // TODO: replace with suitable period
+		super((long) (2000/speed));
 		this.mach = mach;
 		mode = WaterEvent.WATER_IDLE;
 	}
 
 	public void perform() {
-		// TODO: implement this method
 		event = (WaterEvent) mailbox.tryFetch();
 		if (event != null) {
 			mode = event.getMode();
@@ -39,7 +37,6 @@ public class WaterController extends PeriodicThread {
 				mach.setFill(true);
 			}
 			else {
-				//mach.setFill(false);
 				wp.putEvent(new AckEvent(this));
 			}
 			break;
@@ -49,13 +46,11 @@ public class WaterController extends PeriodicThread {
 				mach.setDrain(true);
 			}
 			else {
-				//mach.setDrain(false);
 				wp.putEvent(new AckEvent(this));
 			}
 			break;
 			
 		default:
-			
 			break;
 		}
 	}

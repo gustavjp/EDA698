@@ -15,8 +15,7 @@ import done.*;
  * <UL>
  *   <LI>Switches off heating
  *   <LI>Switches off spin
- *   <LI>Pumps out water
- *   <LI>Unlocks the hatch.
+ *   <LI>Switches off pump
  * </UL>
  */
 class WashingProgram0 extends WashingProgram {
