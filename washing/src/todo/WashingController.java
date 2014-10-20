@@ -9,6 +9,7 @@ public class WashingController implements ButtonListener {
 	private WaterController waterController;
 	private SpinController spinController;
 	private WashingProgram wp;
+    private boolean programStarted;
 	
     public WashingController(AbstractWashingMachine theMachine, double theSpeed) {
     	this.theMachine = theMachine;
@@ -19,28 +20,39 @@ public class WashingController implements ButtonListener {
     	waterController.start();
     	spinController.start();
     	tempController.start();
+        programStarted = false;
     }
 
     public void processButton(int theButton) {
     	switch(theButton){
     	case 0:
             wp = new WashingProgram0(theMachine, theSpeed, tempController, waterController, spinController);
+            programStarted = false;
             wp.start();
     		break;
 
     	case 1:
     		wp = new WashingProgram1(theMachine, theSpeed, tempController, waterController, spinController);
-    		wp.start();
+            if(programStarted == false){
+                programStarted = true;
+                wp.start();
+            }
     		break;
 
     	case 2:
     		wp = new WashingProgram2(theMachine, theSpeed, tempController, waterController, spinController);
-    		wp.start();
+            if(programStarted == false){
+                programStarted = true;
+                wp.start();
+            }
     		break;
 
     	case 3:
     		wp = new WashingProgram3(theMachine, theSpeed, tempController, waterController, spinController);
-    		wp.start();
+            if(programStarted == false){
+                programStarted = true;
+                wp.start();
+            }
     		break;
     	}
     }
