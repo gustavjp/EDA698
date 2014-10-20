@@ -8,12 +8,14 @@ public class SpinController extends PeriodicThread {
 	private SpinEvent event;
 	private int mode, direction;
 	private long lastTime;
+    private double speed;
 
 	public SpinController(AbstractWashingMachine mach, double speed) {
 		super((long) (1000/speed));
 		this.mach = mach;
 		mode = SpinEvent.SPIN_OFF;
         direction = AbstractWashingMachine.SPIN_LEFT;
+        this.speed = speed;
 	}
 
 	public void perform() {
@@ -40,7 +42,7 @@ public class SpinController extends PeriodicThread {
         }
 
         if(mode != SpinEvent.SPIN_OFF){
-            if(System.currentTimeMillis() >= lastTime + 60*1000){
+            if(System.currentTimeMillis() >= lastTime + 60*1000/(int)speed){
                 if(direction == AbstractWashingMachine.SPIN_LEFT){
                     direction = AbstractWashingMachine.SPIN_RIGHT;
                 }

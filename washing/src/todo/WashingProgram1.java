@@ -37,10 +37,12 @@ class WashingProgram1 extends WashingProgram {
 	 * @param spinController
 	 *            The SpinController to use
 	 */
+    private double speed;
 	public WashingProgram1(AbstractWashingMachine mach, double speed,
 			TemperatureController tempController,
 			WaterController waterController, SpinController spinController) {
 		super(mach, speed, tempController, waterController, spinController);
+        this.speed = speed;
 	}
 
 	// ---------------------------------------------------------- PUBLIC METHODS
@@ -65,7 +67,7 @@ class WashingProgram1 extends WashingProgram {
 		//Spin slow
 		mySpinController.putEvent(new SpinEvent(this, SpinEvent.SPIN_SLOW));
 		//Spin for 30 minutes
-		Thread.sleep(30*60*1000);
+		Thread.sleep(30*60*1000/(int)speed);
 		myTempController.putEvent(new TemperatureEvent(this, TemperatureEvent.TEMP_IDLE, 20.0));
 		//Turn off spin
 		mySpinController.putEvent(new SpinEvent(this, SpinEvent.SPIN_OFF));
@@ -84,17 +86,21 @@ class WashingProgram1 extends WashingProgram {
 			//Spin slow
 			mySpinController.putEvent(new SpinEvent(this, SpinEvent.SPIN_SLOW));
 			//Spin for 2 minutes
-			Thread.sleep(2*60*1000);
+			Thread.sleep(2*60*1000/(int)speed);
 			//Turn off spin
 			mySpinController.putEvent(new SpinEvent(this, SpinEvent.SPIN_OFF));
 			//Drain water
 			myWaterController.putEvent(new WaterEvent(this, WaterEvent.WATER_DRAIN, 0.0));
 			//Wait until drained
 			mailbox.doFetch();
+            //Stop draining water
+            myWaterController.putEvent(new WaterEvent(this, WaterEvent.WATER_IDLE, 0.0));
 		}
 		//Centrifuge
 		mySpinController.putEvent(new SpinEvent(this, SpinEvent.SPIN_FAST));
-		Thread.sleep(5*60*1000);
+		Thread.sleep(5*60*1000/(int)speed);
+        //Turn off spin
+        mySpinController.putEvent(new SpinEvent(this, SpinEvent.SPIN_OFF));
 		//Unlock
 		myMachine.setLock(false);
 	}

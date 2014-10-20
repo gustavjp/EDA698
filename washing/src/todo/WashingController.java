@@ -10,6 +10,7 @@ public class WashingController implements ButtonListener {
 	private SpinController spinController;
 	private WashingProgram wp;
     private boolean programStarted;
+    private boolean wasInterrupted;
 	
     public WashingController(AbstractWashingMachine theMachine, double theSpeed) {
     	this.theMachine = theMachine;
@@ -21,39 +22,57 @@ public class WashingController implements ButtonListener {
     	spinController.start();
     	tempController.start();
         programStarted = false;
+        wasInterrupted = false;
     }
 
     public void processButton(int theButton) {
     	switch(theButton){
     	case 0:
-            wp = new WashingProgram0(theMachine, theSpeed, tempController, waterController, spinController);
-            programStarted = false;
-            wp.start();
+            System.out.println("0 "+ programStarted);
+            if(programStarted){
+                programStarted = false;
+                wasInterrupted = true;
+                wp.interrupt();
+                wp = null;
+            }
+
     		break;
 
     	case 1:
-    		wp = new WashingProgram1(theMachine, theSpeed, tempController, waterController, spinController);
-            if(programStarted == false){
+
+            if(programStarted == false && !wasInterrupted){
+                wp = new WashingProgram1(theMachine, theSpeed, tempController, waterController, spinController);
                 programStarted = true;
+                System.out.println(Thread.activeCount());
                 wp.start();
             }
     		break;
 
     	case 2:
-    		wp = new WashingProgram2(theMachine, theSpeed, tempController, waterController, spinController);
-            if(programStarted == false){
+
+            if(programStarted == false && !wasInterrupted){
+                wp = new WashingProgram2(theMachine, theSpeed, tempController, waterController, spinController);
                 programStarted = true;
+                System.out.println(Thread.activeCount());
                 wp.start();
             }
     		break;
 
     	case 3:
-    		wp = new WashingProgram3(theMachine, theSpeed, tempController, waterController, spinController);
+
             if(programStarted == false){
-                programStarted = true;
-                wp.start();
+                wp = new WashingProgram3(theMachine, theSpeed, tempController, waterController, spinController);
+                if(wasInterrupted){
+                    programStarted = true;
+                    wp.start();
+                    programStarted = false;
+                    wasInterrupted = false;
+                }
+
             }
     		break;
-    	}
+            default:
+                System.out.println("faojdfnauifn");
+        }
     }
 }
